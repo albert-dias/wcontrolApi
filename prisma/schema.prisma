@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  USER
+  ADMSYSTEM
+}
+
+model Users {
+  id          String         @id @default(uuid())
+  email       String         @unique
+  name        String
+  lastname    String
+  phone       String
+  user_type   UserType       @default(USER)
+  password    String
+  avatar      String?
+  created_at  DateTime       @default(now())
+  updated_at  DateTime       @default(now())
+  services    UserServices[]
+  transaction Transaction[]
+
+  @@map("users")
+}
+
+model UserServices {
+  id          String        @id @default(uuid())
+  user_id     String
+  user        Users         @relation(fields: [user_id], references: [id])
+  description String
+  value       Int
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  transaction Transaction[]
+
+  @@map("user_services")
+}
+
+model Colors {
+  id          String        @id @default(uuid())
+  description String
+  value       String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  transaction Transaction[]
+
+  @@map("colors")
+}
+
+model PaymentTypes {
+  id          String        @id @default(uuid())
+  description String?
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  transaction Transaction[]
+
+  @@map("payment_types")
+}
+
+model Transaction {
+  id         String        @id @default(uuid())
+  user_id    String
+  user       Users         @relation(fields: [user_id], references: [id])
+  service_id String
+  service    UserServices  @relation(fields: [service_id], references: [id])
+  value      Int
+  color_id   String
+  color      Colors        @relation(fields: [color_id], references: [id])
+  payment_id String?
+  payment    PaymentTypes? @relation(fields: [payment_id], references: [id])
+  car_plate  String
+  created_at DateTime      @default(now())
+  updated_at DateTime      @default(now())
+
+  @@map("transactions")
+}
