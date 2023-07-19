@@ -19,7 +19,7 @@ export async function CreateTransactionService({
   car_plate,
   value,
 }: IRequest): Promise<Transaction> {
-  if (!service_id || !color_id || !user_id || !payment_id || !car_plate) {
+  if (!service_id || !color_id || !user_id || !car_plate) {
     throw new Error("Incomplete data");
   }
 

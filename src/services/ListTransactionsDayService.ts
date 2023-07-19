@@ -14,6 +14,7 @@ interface IResponse {
   pix: IInfoPayment;
   money: IInfoPayment;
   card: IInfoPayment;
+  total: IInfoPayment;
 }
 
 const prisma = new PrismaClient();
@@ -27,7 +28,7 @@ export async function ListTransactionsDayService({
 
   const today = new Date();
 
-  const day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate;
+  const day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
   const month =
     today.getMonth() + 1 < 10
       ? `0${today.getMonth() + 1}`
@@ -50,7 +51,7 @@ export async function ListTransactionsDayService({
 
   const pix = result.reduce(
     (acc, item) => {
-      return item.payment!.description === "PIX"
+      return item.payment !== null && item.payment!.description === "PIX"
         ? {
             qtd: (acc.qtd += 1),
             value: (acc.value += item.service.value),
@@ -62,7 +63,8 @@ export async function ListTransactionsDayService({
 
   const card = result.reduce(
     (acc, item) => {
-      return item.payment!.description?.includes("CARTÃO")
+      return item.payment !== null &&
+        item.payment!.description?.includes("CARTÃO")
         ? {
             qtd: (acc.qtd += 1),
             value: (acc.value += item.service.value),
@@ -74,7 +76,7 @@ export async function ListTransactionsDayService({
 
   const money = result.reduce(
     (acc, item) => {
-      return item.payment!.description === "DINHEIRO"
+      return item.payment !== null && item.payment!.description === "DINHEIRO"
         ? {
             qtd: (acc.qtd += 1),
             value: (acc.value += item.service.value),
@@ -84,10 +86,16 @@ export async function ListTransactionsDayService({
     { qtd: 0, value: 0 }
   );
 
+  const total = {
+    qtd: pix.qtd + card.qtd + money.qtd,
+    value: pix.value + card.value + money.value,
+  };
+
   return {
     pix,
     money,
     card,
+    total,
     transactions: result,
   };
 }

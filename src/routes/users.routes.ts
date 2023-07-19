@@ -47,6 +47,11 @@ usersRouter.get(
   ensureAuthenticate,
   transactionsController.list
 );
+usersRouter.put(
+  "/transactions",
+  ensureAuthenticate,
+  transactionsController.update
+);
 usersRouter.post(
   "/transactions/resume",
   ensureAuthenticate,
