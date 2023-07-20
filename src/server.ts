@@ -8,4 +8,4 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-app.listen(3333, () => console.log("Api is only port: 3333"))
+app.listen(3335, () => console.log("Api is only port: 3333"));
