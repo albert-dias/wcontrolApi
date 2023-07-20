@@ -2,6 +2,7 @@ import { PrismaClient, Transaction } from "@prisma/client";
 
 interface IRequest {
   user_id: string;
+  date?: Date;
 }
 
 interface IInfoPayment {
@@ -21,12 +22,13 @@ const prisma = new PrismaClient();
 
 export async function ListTransactionsDayService({
   user_id,
+  date,
 }: IRequest): Promise<IResponse> {
   if (!user_id) {
     throw new Error("Incomplete data");
   }
 
-  const today = new Date();
+  const today = date ? new Date(date) : new Date();
 
   const day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
   const month =

@@ -43,7 +43,7 @@ usersRouter.post(
   transactionsController.create
 );
 usersRouter.get(
-  "/transactions",
+  "/transactions/:date",
   ensureAuthenticate,
   transactionsController.list
 );

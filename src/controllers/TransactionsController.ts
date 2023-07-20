@@ -34,8 +34,9 @@ export class TransactionsController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.user;
+      const { date } = req.params;
 
-      const response = await ListTransactionsDayService({ user_id: id });
+      const response = await ListTransactionsDayService({ user_id: id, date });
 
       return res.status(201).json(response);
     } catch (error: any) {
