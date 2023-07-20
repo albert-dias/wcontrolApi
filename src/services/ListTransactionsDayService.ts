@@ -2,7 +2,7 @@ import { PrismaClient, Transaction } from "@prisma/client";
 
 interface IRequest {
   user_id: string;
-  date?: Date;
+  date?: string;
 }
 
 interface IInfoPayment {

@@ -1,4 +1,4 @@
-import { S3Client } from "@aws-sdk/client-s3"
+import { S3Client } from "@aws-sdk/client-s3";
 import crypto from "crypto";
 import multer from "multer";
 import multerS3 from "multer-s3";
@@ -10,8 +10,8 @@ const s3 = new S3Client({
   region: process.env.AWS_DEFAULT_REGION,
   credentials: {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!
-  }
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+  },
 });
 
 const storgeTypes = {
@@ -44,7 +44,7 @@ export default {
   limits: {
     fileSize: 12 * 1024 * 1024,
   },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req: any, file: any, cb: any) => {
     const allowedMimes = [
       "image/jpeg",
       "image/pjpeg",
