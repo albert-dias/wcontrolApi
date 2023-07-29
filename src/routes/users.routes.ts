@@ -10,22 +10,22 @@ const transactionsController = new TransactionsController();
 const usersRouter = Router();
 const servicesRouter = Router();
 
-import multer from "multer";
-import uploadConfig from "../config/upload";
+// import multer from "multer";
+// import uploadConfig from "../config/upload";
 
-const upload = multer(uploadConfig);
+// const upload = multer(uploadConfig);
 
 //USUARIO
 usersRouter.post("/", usersController.create);
 // usersRouter.post("/forgot", usersController.forgot);
 // usersRouter.post("/updatpass", usersController.updatepass);
 usersRouter.get("/me", ensureAuthenticate, usersController.show);
-usersRouter.post(
-  "/me/avatar",
-  ensureAuthenticate,
-  upload.single("avatar"),
-  usersController.update
-);
+// usersRouter.post(
+//   "/me/avatar",
+//   ensureAuthenticate,
+//   upload.single("avatar"),
+//   usersController.update
+// );
 
 //SERVICOS
 usersRouter.post("/services", ensureAuthenticate, servicesController.create);

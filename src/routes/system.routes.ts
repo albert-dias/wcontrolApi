@@ -7,9 +7,9 @@ const systemController = new SystemController();
 const systemRouter = Router();
 
 import multer from "multer";
-import uploadConfig from "../config/upload";
+// import uploadConfig from "../config/upload";
 
-const upload = multer(uploadConfig);
+// const upload = multer(uploadConfig);
 
 systemRouter.get("/", systemController.initial);
 systemRouter.post("/paymenttype", systemController.createPaymentTypes);
